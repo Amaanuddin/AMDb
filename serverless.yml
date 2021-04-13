@@ -1,0 +1,21 @@
+service: AMDb-graphql-api
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: us-west-2
+  stage: ${opt:stage}
+
+functions:
+  graphql:
+    handler: functions/graphql/index.graphqlHandler
+    events:
+      - http:
+          path: graphql
+          method: get
+      - http:
+          path: graphql
+          method: post
+          cors: true
+plugins:
+  - serverless-offline

@@ -1,0 +1,27 @@
+{
+  "name": "amdb",
+  "version": "1.0.0",
+  "description": "Atomic circle movies database graphql server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Amaanuddin/AMDb.git"
+  },
+  "author": "Amaanuddin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Amaanuddin/AMDb/issues"
+  },
+  "homepage": "https://github.com/Amaanuddin/AMDb#readme",
+  "dependencies": {
+    "apollo-server-lambda": "^2.22.2",
+    "aws-sdk": "^2.885.0",
+    "graphql": "^15.5.0",
+    "serverless": "^2.35.0",
+    "serverless-dynamodb-client": "0.0.2",
+    "serverless-offline": "^6.9.0"
+  }
+}
