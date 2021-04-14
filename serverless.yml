@@ -1,10 +1,15 @@
 service: AMDb-graphql-api
 
+custom:
+  secrets: ${file(config.json)}
+
 provider:
   name: aws
   runtime: nodejs12.x
   region: us-west-2
   stage: ${opt:stage}
+  environment:
+    GRAPHQL_ENDPOINT: ${self:custom.secrets.graphqlEndpoint.${self:provider.stage}}
 
 functions:
   graphql:
