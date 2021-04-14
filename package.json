@@ -4,7 +4,8 @@
   "description": "Atomic circle movies database graphql server",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "initDB": "sls dynamodb install --stage dev"
   },
   "repository": {
     "type": "git",
@@ -21,8 +22,10 @@
     "aws-sdk": "^2.885.0",
     "axios": "^0.21.1",
     "graphql": "^15.5.0",
-    "serverless": "^2.35.0",
-    "serverless-dynamodb-client": "0.0.2",
+    "serverless": "^2.35.0"
+  },
+  "devDependencies": {
+    "serverless-dynamodb-local": "^0.2.39",
     "serverless-offline": "^6.9.0"
   }
 }
