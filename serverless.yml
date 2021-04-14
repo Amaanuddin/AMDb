@@ -10,6 +10,7 @@ provider:
   stage: ${opt:stage}
   environment:
     GRAPHQL_ENDPOINT: ${self:custom.secrets.graphqlEndpoint.${self:provider.stage}}
+    MOVIES_API_KEY: ${self:custom.secrets.moviesAPIKey.${self:provider.stage}}
 
 functions:
   graphql:
