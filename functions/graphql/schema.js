@@ -5,7 +5,6 @@ const { gql } = require('apollo-server-lambda');
 
 exports.schema = gql`
   type Query {
-    hello(name: String): String
     listMovies(pageNo: Int = 1): PaginatedMovieResult
     movie(id: Int!): Movie
     searchMovie(searchInput: String!, pageNo: Int = 1):PaginatedMovieResult
