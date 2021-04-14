@@ -2,5 +2,9 @@
   "graphqlEndpoint": {
     "dev": "http://localhost:4000/dev/graphql",
     "production": "http://localhost:4000/production/graphql"
+  },
+  "moviesAPIKey": {
+    "dev": "cf15d00b6a15e04ef81ead8468596896",
+    "production": ""
   }
 }
