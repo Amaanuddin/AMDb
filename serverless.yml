@@ -2,7 +2,7 @@ service: AMDb-graphql-api
 
 custom:
   secrets: ${file(config.json)}
-  tableName: ${self:provider.stage}-users
+  userTableName: ${self:provider.stage}-users
   dynamodb:
   # If you only want to use DynamoDB Local in some stages, declare them here
     stages:
@@ -25,6 +25,7 @@ provider:
   environment:
     GRAPHQL_ENDPOINT: ${self:custom.secrets.graphqlEndpoint.${self:provider.stage}}
     MOVIES_API_KEY: ${self:custom.secrets.moviesAPIKey.${self:provider.stage}}
+    USER_TABLE_NAME: ${self:custom.userTableName}
 
 functions:
   graphql:
@@ -43,7 +44,7 @@ resources:
     usersTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: ${self:custom.tableName}
+        TableName: ${self:custom.userTableName}
         AttributeDefinitions:
           - AttributeName: email
             AttributeType: S

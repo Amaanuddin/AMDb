@@ -8,7 +8,13 @@ exports.schema = gql`
     listMovies(pageNo: Int = 1): PaginatedMovieResult
     movie(id: Int!): Movie
     searchMovie(searchInput: String!, pageNo: Int = 1):PaginatedMovieResult
+    login(email: String!, password: String!): AuthData
   }
+
+   type Mutation {
+    signUp(email: String!, password: String!, name: String!): User!
+  }
+
 
   type Movie {
       id: Int!
@@ -24,4 +30,17 @@ exports.schema = gql`
       total_pages: Int!
       total_results: Int!
   }
+  
+  type User {
+    email: String!
+    fav_movies: [Int]
+    name: String!
+    password: String!
+  }
+
+  type AuthData {
+  email: String!
+  token: String!
+  tokenExpiration: Int!
+}
 `;
