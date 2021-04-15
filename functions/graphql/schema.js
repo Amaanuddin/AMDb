@@ -10,7 +10,7 @@ exports.schema = gql`
     movie(id: Int!): Movie
     searchMovie(searchInput: String!, pageNo: Int = 1): PaginatedMovieResult
     login(email: String!, password: String!): AuthData
-    listFavoriteMovies(email: String!, fav_movies: JSON): [Movie]
+    listFavoriteMovies(email: String!): [Movie]
   }
 
   type Mutation {

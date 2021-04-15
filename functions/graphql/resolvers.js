@@ -66,16 +66,18 @@ exports.resolvers = {
       if (context.user.email !== args.email || !context.user) {
         throw new AuthenticationError("Unauthorized!");
       }
-      const movies = [];
-      await Promise.all(
-        Object.keys(args.fav_movies).map(async (id) => {
-          const movie = await axios.get(
-            `${MOVIE_BASE_URL}movie/${id}?api_key=${process.env.MOVIES_API_KEY}`
-          );
-          return movies.push({ ...movie.data, isFavorite: true });
-        })
-      );
-      return movies;
+      const params = {
+        TableName: process.env.USER_TABLE_NAME,
+        Key: {
+          email: args.email,
+        },
+      };
+      const { Item } = await Get(params);
+      console.log(Item.fav_movies);
+      const favMovies = Object.keys(Item.fav_movies).map((id) => {
+        return { ...Item.fav_movies[id], id };
+      });
+      return favMovies;
     },
   },
   Mutation: {
@@ -118,17 +120,30 @@ exports.resolvers = {
       if (context.user.email !== args.email || !context.user) {
         throw new AuthenticationError("Unauthorized!");
       }
+      const {
+        data: { id, title, vote_average, overview, poster_path },
+      } = await axios.get(
+        `${MOVIE_BASE_URL}movie/${args.movieID}?api_key=${process.env.MOVIES_API_KEY}`
+      );
+      const movieData = {
+        id,
+        title,
+        vote_average,
+        overview,
+        poster_path,
+        isFavorite: true,
+      };
       const params = {
         TableName: process.env.USER_TABLE_NAME,
         Key: {
           email: args.email,
         },
-        UpdateExpression: "SET fav_movies.#movieID = :movieID",
+        UpdateExpression: "SET fav_movies.#movieID = :movie",
         ExpressionAttributeNames: {
           "#movieID": args.movieID,
         },
         ExpressionAttributeValues: {
-          ":movieID": args.movieID,
+          ":movie": movieData,
         },
         ReturnValues: "ALL_NEW",
       };
