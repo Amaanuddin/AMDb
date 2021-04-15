@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "initDB": "sls dynamodb install --stage dev",
-    "server-start": "sls offline start --httpPort 4000 --stage dev --noAuth"
+    "server-start": "sls offline start --httpPort 4000 --stage dev --noAuth",
+    "client-start": "npm start --prefix client",
+    "dev": "concurrently \"npm run client-start\" \"npm run server-start \""
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,7 @@
     "serverless": "^2.35.0"
   },
   "devDependencies": {
+    "concurrently": "^6.0.2",
     "serverless-dynamodb-local": "^0.2.39",
     "serverless-offline": "^6.9.0"
   }
