@@ -25,7 +25,7 @@ exports.schema = gql`
     title: String!
     vote_average: Float
     overview: String!
-    poster_path: String!
+    poster_path: String
     isFavorite: Boolean
   }
 

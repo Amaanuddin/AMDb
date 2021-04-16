@@ -3,12 +3,12 @@ import React, {useEffect} from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Navbar from './components/navbar';
-import Movies from './components/movies';
 import Actions from './store/actions';
 import Loading from './components/common/loading';
 import Login from './components/login';
 import styled from 'styled-components';
 import axios from 'axios';
+import Home from './components/Home';
 
 
 const MainWrapper = styled.div`
@@ -73,7 +73,7 @@ function Main(props) {
               <Navbar />
                 <div >
                   <Switch>
-                    <Route exact path="/" component={Movies} />
+                    <Route exact path="/" component={Home} />
                      <Route
                       path="/login"
                      component={Login}

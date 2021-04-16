@@ -95,7 +95,7 @@ const Navbar = props => {
                         </li>
                     )}
                     <li>
-                        <NavLink to="/movies">Home</NavLink>
+                        <NavLink to="/">Home</NavLink>
                     </li>
                     {token && ( 
                         <>
