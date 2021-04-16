@@ -11,6 +11,7 @@ exports.schema = gql`
     searchMovie(searchInput: String!, pageNo: Int = 1): PaginatedMovieResult
     login(email: String!, password: String!): AuthData
     listFavoriteMovies(email: String!): [Movie]
+    getAuthUser: AuthData!
   }
 
   type Mutation {
@@ -43,7 +44,7 @@ exports.schema = gql`
   }
 
   type AuthData {
-    email: String!
+    user: User!
     token: String!
     tokenExpiration: Int!
   }

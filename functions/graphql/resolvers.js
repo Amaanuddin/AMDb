@@ -2,8 +2,8 @@ const { default: axios } = require("axios");
 const { Get, Put, Update } = require("../../common/db/dynamo");
 
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 const { AuthenticationError } = require("apollo-server-errors");
+const { getToken } = require("../../common/getToken");
 
 const MOVIE_BASE_URL = "https://api.themoviedb.org/3/";
 
@@ -53,14 +53,8 @@ exports.resolvers = {
       if (!isEqual) {
         throw new Error("Password is incorrect!");
       }
-      const token = jwt.sign(
-        { name: Item.name, email: Item.email },
-        "somesupersecretkey",
-        {
-          expiresIn: "1h",
-        }
-      );
-      return { email: Item.email, token, tokenExpiration: 1 };
+      const token = getToken(Item);
+      return { user: { ...Item, password: "" }, token, tokenExpiration: 1 };
     },
     listFavoriteMovies: async (parent, args, context, info) => {
       if (context.user.email !== args.email || !context.user) {
@@ -78,6 +72,20 @@ exports.resolvers = {
         return { ...Item.fav_movies[id], id };
       });
       return favMovies;
+    },
+    getAuthUser: async (parent, args, context, info) => {
+      if (!context.user) {
+        throw new AuthenticationError("Unauthorized!");
+      }
+      const params = {
+        TableName: process.env.USER_TABLE_NAME,
+        Key: {
+          email: context.user.email,
+        },
+      };
+      const { Item } = await Get(params);
+      const token = getToken(Item);
+      return { user: { ...Item, password: "" }, token, tokenExpiration: 1 };
     },
   },
   Mutation: {
