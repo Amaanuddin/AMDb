@@ -62,7 +62,6 @@ function Main(props) {
       updateUser(payload);
       
     } catch (err) {
-      console.log('Unauthorized')
       const { signOut } = props;
       signOut();
     }

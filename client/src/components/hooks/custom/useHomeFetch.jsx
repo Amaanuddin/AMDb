@@ -59,7 +59,6 @@ export const useHomeFetch = (searchTerm) => {
       }));
     } catch (error) {
       setError(true);
-      console.log(error);
     }
     setLoading(false);
   };
@@ -73,11 +72,6 @@ export const useHomeFetch = (searchTerm) => {
     }
   }, []);
 
-  useEffect(() => {
-    if (!searchTerm) {
-      // sessionStorage.setItem("homeState", JSON.stringify(state));
-    }
-  }, [searchTerm, state]);
 
   return [{ state, loading, error }, fetchMovies];
 };

@@ -5,14 +5,9 @@ import FontAwesome from "react-fontawesome";
 // Components
 import Modal from "../movieModal";
 import MovieDetails from "../movieDetails";
-// import Spinner from "./Spinner";
-
-// Custom Hook
-// import { useMovieFetch } from "../hooks/custom/useMovieFetch";
 
 // Styled Components
 import { FavoriteMarker, StyledMovieCard } from "./styles";
-// import Loading from "../common/loading";
 import { connect } from "react-redux";
 import axios from "axios";
 import Actions from "../../store/actions";
@@ -20,11 +15,6 @@ import Actions from "../../store/actions";
 const MovieCard = (props) => {
   const { image, movie, clickable, user, favMovie } = props
   const [isModal, setModal] = useState(false);
-
-//   const [movie, loading, error] = useMovieFetch(movieId);
-
-//   if (error) return <div>Something went wrong ...</div>;
-//   if (loading) return <Loading />;
     
     const toggleFavoriteMovie = async (movieId) => {
         const { updateUser } = props;

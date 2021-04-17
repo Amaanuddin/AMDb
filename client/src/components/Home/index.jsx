@@ -27,7 +27,6 @@ const Home = props => {
      searchTerm ? fetchMovies(searchTerm,  currentPage + 1) : fetchMovies('',  currentPage + 1);
 
   };
-  console.log(process.env.REACT_APP_IMAGE_BASE_URL + process.env.REACT_APP_POSTER_SIZE);
   if (error) return <div>Something went wrong ...</div>;
   if (!movies[0]) return <Loading />;
     return (

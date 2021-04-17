@@ -67,7 +67,6 @@ exports.resolvers = {
         },
       };
       const { Item } = await Get(params);
-      console.log(Item.fav_movies);
       const favMovies = Object.keys(Item.fav_movies).map((id) => {
         return { ...Item.fav_movies[id], id };
       });

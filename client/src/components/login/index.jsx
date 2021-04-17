@@ -103,7 +103,6 @@ function Login(props) {
     const [password, setPassword] = useState('');
     const [displayPage, setDisplayPage] = useState('login');
     const login = async () => {
-        console.log(process.env.REACT_APP_GRAPHQL_ENDPOINT, email, password)
         const request = {
             query: `
                 query {
@@ -139,7 +138,6 @@ function Login(props) {
     }
 
     const signUp = async () => {
-    console.log(process.env.REACT_APP_GRAPHQL_ENDPOINT, email, password)
     const request = {
         query: `
             mutation {
