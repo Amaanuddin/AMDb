@@ -1,0 +1,58 @@
+service: AMDb-graphql-api
+
+custom:
+  secrets: ${file(config.json)}
+  userTableName: ${self:provider.stage}-users
+  dynamodb:
+  # If you only want to use DynamoDB Local in some stages, declare them here
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
+    migration:
+      dir: offline/migrations
+      
+    # Uncomment only if you already have a DynamoDB running locally
+    # noStart: true
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: us-west-2
+  stage: ${opt:stage}
+  environment:
+    GRAPHQL_ENDPOINT: ${self:custom.secrets.graphqlEndpoint.${self:provider.stage}}
+    MOVIES_API_KEY: ${self:custom.secrets.moviesAPIKey.${self:provider.stage}}
+    USER_TABLE_NAME: ${self:custom.userTableName}
+
+functions:
+  graphql:
+    handler: functions/graphql/index.graphqlHandler
+    events:
+      - http:
+          path: graphql
+          method: get
+      - http:
+          path: graphql
+          method: post
+          cors: true
+
+resources:
+  Resources:
+    usersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.userTableName}
+        AttributeDefinitions:
+          - AttributeName: email
+            AttributeType: S
+        KeySchema:
+          - AttributeName: email
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
+plugins:
+  - serverless-dynamodb-local
+  - serverless-offline
