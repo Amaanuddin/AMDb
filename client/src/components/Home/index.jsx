@@ -35,7 +35,7 @@ const Home = props => {
 
         <MovieWall header={searchTerm ? "Search Result" : "Popular Movies"}>
           {movies.map((movie) => (
-            <>
+            
               <MovieCard
                 key={movie.id}
                 clickable
@@ -45,9 +45,9 @@ const Home = props => {
                     : NoImage
                 }
                 movie={movie}
-                favMovie={profile && profile.fav_movies && profile.fav_movies[movie.id]}
+                favMovie={profile && profile.fav_movies && profile.fav_movies[movie.id] ? true: false}
               />
-            </>
+            
           ))}
         </MovieWall>
         {loading && <Loading />}

@@ -10,7 +10,7 @@ import NoImage from "../../assets/no_image.jpg";
 // Styled Components
 import { StyledMovieDetails } from "./styles";
 
-const MovieDetails = ({ movie }) => (
+const MovieDetails = ({ movie, favMovie }) => (
   <StyledMovieDetails backdrop={movie.backdrop_path}>
     <div className="moviedetails-content">
       <div className="moviedetails-thumb">
@@ -23,6 +23,8 @@ const MovieDetails = ({ movie }) => (
               : NoImage
           }
           clickable={false}
+          movieId={movie.id}
+          favMovie={favMovie}
           alt="MovieCard"
         />
       </div>
@@ -44,6 +46,7 @@ const MovieDetails = ({ movie }) => (
 
 MovieDetails.propTypes = {
   movie: PropTypes.object,
+  favMovie: PropTypes.bool,
 };
 
 export default MovieDetails;
