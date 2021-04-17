@@ -13,7 +13,7 @@ import FavoriteMovies from './components/favmovies';
 
 
 const MainWrapper = styled.div`
-padding: 70px 30px 70px 30px;
+padding: 70px 0;
 `;
 
 

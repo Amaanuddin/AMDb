@@ -23,7 +23,7 @@ export const StyledSearchBarContent = styled.div`
     left: 20px;
     top: 12px;
     color: rgba(187, 0, 17, 1);
-    z-index: 1000;
+    z-index: 1;
   }
   input {
     font-size: 1.5rem;

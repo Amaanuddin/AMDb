@@ -11,13 +11,16 @@ import axios from 'axios';
 const ContainerDiv = styled.div`
     display: block;
     text-align: -webkit-center;
+     @media screen and (max-width: 767px) {
+        padding: 0 20px;
+    }
 `;
 
 const ButtonDiv = styled.div`
     text-align: center;
     cursor: pointer;
     margin: 16px 0 0 0;
-    background: #5101d1;
+    background: #44d0a3;
     width: fit-content;
     padding: 10px 20px;
     border-radius: 5px;
@@ -48,13 +51,20 @@ const Input = styled.input`
         color: rgba(46, 53, 62, 0.5);
         font-style: italic;
     }
+    @media screen and (max-width: 767px) {
+        width: 100%;
+    }
 `;
 
 const BreakWrap = styled.div`
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  margin: 0 16px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 0 16px;
+    @media screen and (max-width: 767px) {
+        justify-content: left;
+        margin: 0;
+    }
 `;
 
 const StyledLink = styled.div`
@@ -73,6 +83,18 @@ const BreakerText = styled.span`
     color: rgba(14, 19, 24, 0.7);
     font-size: 16px;
     padding: 20px 10px 10px 0;
+    div{
+        a{
+            color: #2356a9;
+            padding: 0;
+            font-weight: bold;
+            font-size: medium;
+        }
+    }
+    @media screen and (max-width: 767px) {
+        justify-content: left;
+        margin: 0 0 0 16px;
+    }
 `;
 
 function Login(props) {
@@ -100,7 +122,6 @@ function Login(props) {
         };
         const response = await axios.post(process.env.REACT_APP_GRAPHQL_ENDPOINT, request);
         if (response.data.data.login) {
-            //set data in redux and redirect the user to home page
             const { updateUser } = props;
             const {token, tokenExpiration, user}= response.data.data.login
             const payload = {
@@ -142,88 +163,48 @@ function Login(props) {
     
     if (!props.user.token) {
         return (
-            displayPage === 'login' ? (
-                <ContainerDiv>
-                    <Input
-                        value={email}
-                        onChange={(e) => {
-                            setEmail(e.target.value)
-                        }}
-                        placeholder="Email"
-                    />
-                    <Input
-                        value={password}
-                        onChange={(e) => {
-                            setPassword(e.target.value)
-                        }}
-                        type="password"
-                        placeholder="Password"
-                    />
+            <ContainerDiv>
+                {displayPage !== 'login' && (<Input
+                    value={username}
+                    onChange={(e) => {
+                        setUsername(e.target.value)
+                    }}
+                    placeholder="Username"
+                />)}
+                <Input
+                    value={email}
+                    onChange={(e) => {
+                        setEmail(e.target.value)
+                    }}
+                    placeholder="Email"
+                />
+                <Input
+                    value={password}
+                    onChange={(e) => {
+                        setPassword(e.target.value)
+                    }}
+                    type="password"
+                    placeholder="Password"
+                />
+                <BreakWrap>
+                    <ButtonDiv onClick={() => {displayPage === 'login' ? login(): signUp()}}>
+                        {displayPage === 'login' ? "Login" : "Register"}
+                    </ButtonDiv>
                     <BreakWrap>
-                        <ButtonDiv onClick={() => login()}>
-                            Login
-            </ButtonDiv>
-                        <BreakWrap>
-                            <BreakerText>
-                                <StyledLink>
-                                    <Link
-                                        onClick={() => {
-                                            setDisplayPage('signup')
-                                        }}
-                                    >
-                                        {' '}
-                    Sign Up{' '}
-                                    </Link>
-                                </StyledLink>
-                            </BreakerText>
-                        </BreakWrap>
+                        <BreakerText>
+                            <StyledLink>
+                                <Link
+                                    onClick={() => {
+                                            displayPage === 'login' ? setDisplayPage('signup'):setDisplayPage('login')
+                                    }}
+                                >
+                                    {displayPage === 'login' ? "Sign up" : "Login"}
+                                </Link>
+                            </StyledLink>
+                        </BreakerText>
                     </BreakWrap>
-                </ContainerDiv>
-            ) : (
-                <ContainerDiv>
-                    <Input
-                        value={username}
-                        onChange={(e) => {
-                            setUsername(e.target.value)
-                        }}
-                        placeholder="Username"
-                    />
-                    <Input
-                        value={email}
-                        onChange={(e) => {
-                            setEmail(e.target.value)
-                        }}
-                        placeholder="Email"
-                    />
-                    <Input
-                        value={password}
-                        onChange={(e) => {
-                            setPassword(e.target.value)
-                        }}
-                        type="password"
-                        placeholder="Password"
-                    />
-                    <BreakWrap>
-                        <ButtonDiv onClick={() => signUp()}>
-                            Register
-            </ButtonDiv>
-                        <BreakWrap>
-                            <BreakerText>
-                                <StyledLink>
-                                    <Link
-                                        onClick={() => {
-                                            setDisplayPage('login')
-                                        }}
-                                    >
-                                        {' '}
-                    Login{' '}
-                                    </Link>
-                                </StyledLink>
-                            </BreakerText>
-                        </BreakWrap>
-                    </BreakWrap>
-                </ContainerDiv>
-            )
+                </BreakWrap>
+            </ContainerDiv>       
         );
     }
     else {
