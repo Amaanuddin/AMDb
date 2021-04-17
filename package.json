@@ -8,7 +8,8 @@
     "initDB": "sls dynamodb install --stage dev",
     "server-start": "sls offline start --httpPort 4000 --stage dev --noAuth",
     "client-start": "npm start --prefix client",
-    "dev": "concurrently \"npm run client-start\" \"npm run server-start \""
+    "dev": "concurrently \"npm run client-start\" \"npm run server-start \"",
+    "install-packages": "npm i && cd client/ && npm i"
   },
   "repository": {
     "type": "git",
