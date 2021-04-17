@@ -16,6 +16,22 @@ export const StyledMovieCard = styled.div`
     border: 2px solid rgba(255, 255, 0, 1);
     margin: 0 0 0 0;
   }
+  .card-fav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    position: sticky;
+    z-index: 1;
+    transform: translateX(5%) translateY(100%);
+    background: rgb(255 255 255);
+    color: whitesmoke;
+    font-weight: 800;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 0, 1);
+    margin: 0 0 0 0;
+  }
   img {
     width: 100%;
     /* min-height: 340px; */
@@ -45,5 +61,10 @@ export const StyledMovieCard = styled.div`
         opacity: 1;
       }
     }
+  }
+`;
+export const FavoriteMarker = styled.div`
+  span {
+    color: ${(props) => (props.fav ? "red" : "grey")};
   }
 `;

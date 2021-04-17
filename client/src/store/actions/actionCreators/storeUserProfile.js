@@ -1,15 +1,11 @@
-const UPDATE_USER = 'UPDATE_USER';
-const SIGN_OUT = 'SIGN_OUT';
+const UPDATE_USER = "UPDATE_USER";
+const SIGN_OUT = "SIGN_OUT";
 
 export default {
   updateUser: (data) => (dispatch) => {
     const actionData = {
       type: UPDATE_USER,
-      payload: {
-        token: data.token,
-        tokenExpiration: data.tokenExpiration,
-        profile: { ...data.user }
-      }
+      payload: data,
     };
     dispatch(actionData);
   },
@@ -19,7 +15,7 @@ export default {
     payload: {
       tokenExpiration: null,
       profile: null,
-      token: null
-    }
-  })
+      token: null,
+    },
+  }),
 };

@@ -102,7 +102,13 @@ function Login(props) {
         if (response.data.data.login) {
             //set data in redux and redirect the user to home page
             const { updateUser } = props;
-            updateUser({ ...response.data.data.login })
+            const {token, tokenExpiration, user}= response.data.data.login
+            const payload = {
+                token: token,
+                tokenExpiration: tokenExpiration,
+                profile: { ...user },
+            }
+            updateUser(payload)
             localStorage.setItem('token', response.data.data.login.token);
 
         }
@@ -221,7 +227,7 @@ function Login(props) {
         );
     }
     else {
-        return <Redirect to="/movies"></Redirect>
+        return <Redirect to="/"></Redirect>
     }
 
 }

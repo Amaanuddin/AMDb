@@ -37,12 +37,17 @@ export const useMovieFetch = (movieId) => {
 
   useEffect(() => {
     if (localStorage[movieId]) {
-      setState(JSON.parse(localStorage[movieId]));
-      setLoading(false);
+      if (state.isFavorite !== JSON.parse(localStorage[movieId]).isFavorite) {
+        fetchData();
+      }
+      else {
+        setState(JSON.parse(localStorage[movieId]));
+        setLoading(false);
+      }
     } else {
       fetchData();
     }
-  }, [fetchData, movieId]);
+  }, [fetchData, movieId, state]);
 
   useEffect(() => {
     localStorage.setItem(movieId, JSON.stringify(state));

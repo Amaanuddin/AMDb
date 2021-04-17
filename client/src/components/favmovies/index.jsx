@@ -6,18 +6,17 @@ import LoadMoreBtn from "../loadMoreButton";
 import NoImage from '../../assets/no_image.jpg'
 import Loading from '../common/loading';
 import { useHomeFetch } from '../hooks/custom/useHomeFetch';
-import { connect } from 'react-redux';
-const Home = props => {
+const FavoriteMovies = props => {
   const [searchTerm, setSearchTerm] = useState("");
   const [
     {
-      state: { movies, currentPage, totalPages },
+      state: { movies, currentPage, totalPages, favMovies },
       loading,
       error,
     },
     fetchMovies,
   ] = useHomeFetch(searchTerm);
-  const { user: { profile } } = props;
+
   const searchMovies = (search) => {
     setSearchTerm(search);
     fetchMovies(search);
@@ -46,7 +45,7 @@ const Home = props => {
                     : NoImage
                 }
                 movie={movie}
-                favMovie={profile && profile.fav_movies && profile.fav_movies[movie.id]}
+                favMovie={favMovies && favMovies.some((fm) => { console.log(fm.id === movie.id); return fm.id === movie.id})}
               />
             </>
           ))}
@@ -59,10 +58,5 @@ const Home = props => {
     );
     
 };
-const mapStateToProps = ({ user }) => ({
-  user
-});
 
-export default connect(
-  mapStateToProps
-)(Home);
+export default FavoriteMovies;

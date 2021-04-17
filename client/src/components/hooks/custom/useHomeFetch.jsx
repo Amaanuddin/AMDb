@@ -7,7 +7,7 @@ export const useHomeFetch = (searchTerm) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  const fetchMovies = async (search, pageNo = 1) => {
+ const fetchMovies = async (search, pageNo = 1) => {
     setError(false);
     setLoading(true);
 
@@ -50,13 +50,12 @@ export const useHomeFetch = (searchTerm) => {
             `
         };
         const result = await axios.post(process.env.REACT_APP_GRAPHQL_ENDPOINT, request);
-        const moviesResult = !search ? result.data.data.listMovies: result.data.data.searchMovie
-        console.log('Home Hook', ...moviesResult.movies)
+      const moviesResult = !search ? result.data.data.listMovies : result.data.data.searchMovie;
       setState((prev) => ({
         ...prev,
         movies: !search?[...prev.movies, ...moviesResult.movies]: [...moviesResult.movies],
         currentPage: moviesResult.page,
-        totalPages: moviesResult.total_pages,
+        totalPages: moviesResult.total_pages
       }));
     } catch (error) {
       setError(true);
@@ -76,7 +75,7 @@ export const useHomeFetch = (searchTerm) => {
 
   useEffect(() => {
     if (!searchTerm) {
-      sessionStorage.setItem("homeState", JSON.stringify(state));
+      // sessionStorage.setItem("homeState", JSON.stringify(state));
     }
   }, [searchTerm, state]);
 

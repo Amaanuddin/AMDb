@@ -100,10 +100,13 @@ const Navbar = props => {
                     {token && ( 
                         <>
                             <li>
-                                <NavLink to="/bookings">Bookings</NavLink>
+                                <NavLink to="/favorites">Favorites</NavLink>
                             </li>
                             <li>
-                                <Button onClick = {() => props.signOut()}>Logout</Button>
+                                <Button onClick={() => {
+                                    localStorage.removeItem('token')
+                                    props.signOut();
+                                }}>Logout</Button>
                             </li>
                         </>
                     )} 

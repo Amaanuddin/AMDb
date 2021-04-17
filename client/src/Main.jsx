@@ -9,6 +9,7 @@ import Login from './components/login';
 import styled from 'styled-components';
 import axios from 'axios';
 import Home from './components/Home';
+import FavoriteMovies from './components/favmovies';
 
 
 const MainWrapper = styled.div`
@@ -48,11 +49,17 @@ function Main(props) {
         };
       const response = await axios.post(process.env.REACT_APP_GRAPHQL_ENDPOINT, request, {
         headers: {
-        Authorization: `Bearer ${token}`
-      }
-      })
+          Authorization: `Bearer ${token}`
+        }
+      });
 
-      updateUser({ ...response.data.data.getAuthUser });
+      const { token: latestToken, tokenExpiration, user } = response.data.data.getAuthUser;
+      const payload = {
+        token: latestToken,
+        tokenExpiration: tokenExpiration,
+        profile: { ...user },
+      };
+      updateUser(payload);
       
     } catch (err) {
       console.log('Unauthorized')
@@ -73,9 +80,11 @@ function Main(props) {
               <Navbar />
                 <div >
                   <Switch>
-                    <Route exact path="/" component={Home} />
-                     <Route
-                      path="/login"
+                    <Route exact path = "/" component={Home} />
+                    <Route exact path = "/favorites" component = {FavoriteMovies} />
+                    <Route
+                      exact
+                      path = "/login"
                      component={Login}
                     />
                   </Switch>
