@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import Burger from './burger';
 
@@ -18,6 +19,8 @@ const Nav = styled.nav`
     .logo {
         padding: 15px 0;
         align-self: center;
+        cursor: pointer;
+        color: #290f8d;
     }
 }
 `
@@ -25,9 +28,7 @@ const Nav = styled.nav`
 const Navbar = () => {
     return (
         <Nav>
-            <div className="logo">
-                <h1>AMDb</h1>
-            </div>
+             <NavLink to="/" className="logo"> <h1>AMDb</h1></NavLink>  
             <Burger />
         </Nav>
     );
