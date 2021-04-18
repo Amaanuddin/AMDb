@@ -215,10 +215,7 @@ function Login(props) {
 const mapDispatchToProps = (dispatch) => ({
   updateUser: (...params) => {
     dispatch(Actions.storeUserProfile.updateUser(...params));
-  },
-  getUserInfo: async (...params) => {
-    await dispatch(Actions.userInfoActions.getUserInfo(...params));
-  },
+  }
 });
 const mapStateToProps = (state) => ({
   user: state.user
