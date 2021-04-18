@@ -16,16 +16,39 @@ custom:
       
     # Uncomment only if you already have a DynamoDB running locally
     # noStart: true
-
+package:
+  exclude:
+    - client/**
+    - .dynamodb/**
 provider:
   name: aws
   runtime: nodejs12.x
-  region: us-west-2
+  region: ap-south-1
   stage: ${opt:stage}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:BatchWriteItem
+        - dynamodb:BatchGetItem
+      Resource:
+        - Fn::Join:
+            - ""
+            - - "arn:aws:dynamodb:${self:provider.region}:"
+              - Ref: AWS::AccountId
+              - ":table/${self:custom.userTableName}"
   environment:
     GRAPHQL_ENDPOINT: ${self:custom.secrets.graphqlEndpoint.${self:provider.stage}}
     MOVIES_API_KEY: ${self:custom.secrets.moviesAPIKey.${self:provider.stage}}
     USER_TABLE_NAME: ${self:custom.userTableName}
+    SLS_DEBUG: false
+  stackTags:
+    environment: ${self:provider.stage}
+    service: ${self:service}
+    generatedBy: serverless
 
 functions:
   graphql:
